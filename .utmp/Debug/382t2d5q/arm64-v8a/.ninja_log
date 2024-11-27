@@ -1,0 +1,10 @@
+# ninja log v5
+1	1806	7544127832406485	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	13a71756c3228206
+38	1845	7544127832664068	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	e61f6aa6f7977843
+47	1846	7544127832746705	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	abb39f697e66f211
+21	1862	7544127832990951	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	fda714ee8b375ec8
+56	1864	7544127832684667	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	c93134847e737e4d
+8	1936	7544127833854501	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	9534a0e9b24d7dd4
+30	2029	7544127834790721	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	45f92dc26d814be6
+14	2123	7544127835675488	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	b7f501362ba820ab
+2123	2285	7544127837354819	C:/Users/Henri/Documents/Uni/Unity/FoodPerception/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/382t2d5q/obj/arm64-v8a/libgame.so	70e84f71eff6ead1

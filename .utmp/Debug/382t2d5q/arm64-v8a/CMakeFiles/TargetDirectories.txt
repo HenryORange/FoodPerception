@@ -1,0 +1,5 @@
+C:/Users/Henri/Documents/Uni/Unity/FoodPerception/.utmp/Debug/382t2d5q/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/Henri/Documents/Uni/Unity/FoodPerception/.utmp/Debug/382t2d5q/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Users/Henri/Documents/Uni/Unity/FoodPerception/.utmp/Debug/382t2d5q/arm64-v8a/GameActivity/CMakeFiles/game.dir
+C:/Users/Henri/Documents/Uni/Unity/FoodPerception/.utmp/Debug/382t2d5q/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+C:/Users/Henri/Documents/Uni/Unity/FoodPerception/.utmp/Debug/382t2d5q/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
