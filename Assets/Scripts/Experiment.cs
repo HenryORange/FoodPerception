@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Experiment : MonoBehaviour
+public interface ISubmitMessageTarget : IEventSystemHandler
+{
+    void OnSubmitMessage(List<int[]> results);
+}
+
+public class Experiment : MonoBehaviour, ISubmitMessageTarget
 {
     public int participantID;
     public GameObject blackRoom;
@@ -110,6 +116,14 @@ public class Experiment : MonoBehaviour
                 _tasteCanvas.SetActive(false);
                 break;
         }
+    }
+
+    public void OnSubmitMessage(List<int[]> results)
+    {
+        questionnaire.SetActive(false);
+        _timerCanvas.SetActive(true);
+        _state = State.BlackRoom;
+        _stopwatch.Restart();
     }
 
     private void UpdateTimer(int length)

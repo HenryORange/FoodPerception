@@ -21,9 +21,6 @@ public class MoveRelativeScript : MonoBehaviour
             GameObject targetObject = objects[i];
             Vector3 targetOffset = offsets[i];
             targetObject.transform.position = transform.TransformPoint(targetOffset);
-            var rotation = transform.rotation;
-            rotation.z = 0;
-            targetObject.transform.rotation = rotation;
         }
     }
 }
