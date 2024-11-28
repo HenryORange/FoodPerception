@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Experiment : MonoBehaviour
 {
@@ -7,6 +9,8 @@ public class Experiment : MonoBehaviour
     public GameObject blackRoom;
     public GameObject questionnaire;
     public GameObject startButton;
+    private TextMeshProUGUI _timerText;
+    private Image _timerFill;
     private Stopwatch _stopwatch = new Stopwatch();
     private int _state = 0;
     
@@ -16,6 +20,8 @@ public class Experiment : MonoBehaviour
     {
         blackRoom.SetActive(false);
         questionnaire.SetActive(false);
+        _timerText = GameObject.Find("TimerText").GetComponent<TextMeshProUGUI>();
+        _timerFill = GameObject.Find("TimerFill").GetComponent<Image>();
     }
 
     public void StartExperiment()
@@ -33,7 +39,12 @@ public class Experiment : MonoBehaviour
         switch (_state)
         {
             case 0:
-                if (_stopwatch.ElapsedMilliseconds < 1000) return;
+                if (_stopwatch.ElapsedMilliseconds < 15000)
+                {
+                    _timerText.text = (15-_stopwatch.Elapsed.Seconds).ToString();
+                    _timerFill.fillAmount = (float)(1 - (_stopwatch.Elapsed.Seconds / 15.0));
+                    break;
+                }
                 blackRoom.SetActive(false);
                 _state = 1;
 
