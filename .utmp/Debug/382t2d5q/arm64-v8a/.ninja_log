@@ -1,10 +1,10 @@
 # ninja log v5
-1	1806	7544127832406485	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	13a71756c3228206
-38	1845	7544127832664068	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	e61f6aa6f7977843
-47	1846	7544127832746705	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	abb39f697e66f211
-21	1862	7544127832990951	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	fda714ee8b375ec8
-56	1864	7544127832684667	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	c93134847e737e4d
-8	1936	7544127833854501	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	9534a0e9b24d7dd4
-30	2029	7544127834790721	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	45f92dc26d814be6
-14	2123	7544127835675488	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	b7f501362ba820ab
-2123	2285	7544127837354819	C:/Users/Henri/Documents/Uni/Unity/FoodPerception/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/382t2d5q/obj/arm64-v8a/libgame.so	70e84f71eff6ead1
+44	1685	7546722573037278	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	b40d69fae5766567
+14	1693	7546722573017269	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	66a6517e6c9fb214
+20	1746	7546722573264272	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	2767f4d1e22b556d
+59	1767	7546722573884389	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	673257529d03f12e
+1	1783	7546722574045210	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	8289c4bf22de40ff
+28	1799	7546722574216461	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	8dfc6f52f5bcaf92
+35	2021	7546722576406506	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	dafe81c0e1a43028
+7	2115	7546722577367585	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	915d8470f897b25b
+2115	2232	7546722578466463	C:/Users/Henri/Documents/Uni/Unity/FoodPerception/Library/PramData/AndroidApplicationController/Cache/com.UnityTechnologies.com.unity.template.urpblank/gradle-project/unityLibrary/build/intermediates/cxx/Debug/382t2d5q/obj/arm64-v8a/libgame.so	12ceafded953ec6c

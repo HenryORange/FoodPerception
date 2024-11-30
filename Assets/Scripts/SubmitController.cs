@@ -38,7 +38,7 @@ public class SubmitController : MonoBehaviour
     {
         if (CheckAllAnswered())
         {
-            var results = new List<int[]>(4);
+            var results = new List<int[]> {new int[2], new int[2], new int[2], new int[2]};
 
             foreach (var attribute in questions)
             {
@@ -50,45 +50,41 @@ public class SubmitController : MonoBehaviour
                 // save to results
                 switch (label)
                 {
-                    case "Sweet":
-                        results.Insert(0,
-                            new[]
+                    case "Süß":
+                        results[0] = new[]
                             {
                                 int.Parse(
                                     toggleGroup.GetFirstActiveToggle().GetComponentInChildren<TextMeshProUGUI>().text
                                 ),
                                 (int)slider.value
-                            });
+                            };
                         break;
-                    case "Sour":
-                        results.Insert(1,
-                            new[]
+                    case "Sauer":
+                        results[1] = new[]
                             {
                                 int.Parse(
                                     toggleGroup.GetFirstActiveToggle().GetComponentInChildren<TextMeshProUGUI>().text
                                 ),
                                 (int)slider.value
-                            });
+                            };
                         break;
                     case "Bitter":
-                        results.Insert(2,
-                            new[]
+                        results[2] = new[]
                             {
                                 int.Parse(
                                     toggleGroup.GetFirstActiveToggle().GetComponentInChildren<TextMeshProUGUI>().text
                                 ),
                                 (int)slider.value
-                            });
+                            };
                         break;
-                    case "Salty":
-                        results.Insert(3,
-                            new[]
+                    case "Salzig":
+                        results[3] = new[]
                             {
                                 int.Parse(
                                     toggleGroup.GetFirstActiveToggle().GetComponentInChildren<TextMeshProUGUI>().text
                                 ),
                                 (int)slider.value
-                            });
+                            };
                         break;
                 }
 

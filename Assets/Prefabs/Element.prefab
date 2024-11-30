@@ -3101,6 +3101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 8616692836730452684}
   text: {fileID: 7378660580869029235}
+  unit: '%'
 --- !u!1 &7326038816160894242
 GameObject:
   m_ObjectHideFlags: 0

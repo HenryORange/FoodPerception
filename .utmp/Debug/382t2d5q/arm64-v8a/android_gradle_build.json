@@ -1,7 +1,7 @@
 {
   "buildFiles": [
-    "C:\\Users\\Henri\\Documents\\Uni\\Unity\\FoodPerception\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\CMakeLists.txt",
-    "C:\\Users\\Henri\\Documents\\Uni\\Unity\\FoodPerception\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\GameActivity\\CMakeLists.txt"
+    "C:\\Users\\Henri\\Documents\\Uni\\Unity\\FoodPerception\\Library\\PramData\\AndroidApplicationController\\Cache\\com.UnityTechnologies.com.unity.template.urpblank\\gradle-project\\unityLibrary\\src\\main\\cpp\\CMakeLists.txt",
+    "C:\\Users\\Henri\\Documents\\Uni\\Unity\\FoodPerception\\Library\\PramData\\AndroidApplicationController\\Cache\\com.UnityTechnologies.com.unity.template.urpblank\\gradle-project\\unityLibrary\\src\\main\\cpp\\GameActivity\\CMakeLists.txt"
   ],
   "cleanCommandsComponents": [
     [
@@ -22,7 +22,7 @@
       "toolchain": "toolchain",
       "abi": "arm64-v8a",
       "artifactName": "game",
-      "output": "C:\\Users\\Henri\\Documents\\Uni\\Unity\\FoodPerception\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\Debug\\382t2d5q\\obj\\arm64-v8a\\libgame.so",
+      "output": "C:\\Users\\Henri\\Documents\\Uni\\Unity\\FoodPerception\\Library\\PramData\\AndroidApplicationController\\Cache\\com.UnityTechnologies.com.unity.template.urpblank\\gradle-project\\unityLibrary\\build\\intermediates\\cxx\\Debug\\382t2d5q\\obj\\arm64-v8a\\libgame.so",
       "runtimeFiles": []
     }
   },

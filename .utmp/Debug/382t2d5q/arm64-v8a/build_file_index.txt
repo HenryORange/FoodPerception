@@ -1,2 +1,2 @@
-C:\Users\Henri\Documents\Uni\Unity\FoodPerception\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
-C:\Users\Henri\Documents\Uni\Unity\FoodPerception\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt
+C:\Users\Henri\Documents\Uni\Unity\FoodPerception\Library\PramData\AndroidApplicationController\Cache\com.UnityTechnologies.com.unity.template.urpblank\gradle-project\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Users\Henri\Documents\Uni\Unity\FoodPerception\Library\PramData\AndroidApplicationController\Cache\com.UnityTechnologies.com.unity.template.urpblank\gradle-project\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt
