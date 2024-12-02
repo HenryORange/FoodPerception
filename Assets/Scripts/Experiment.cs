@@ -20,12 +20,14 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
     public GameObject questionnaire;
     public GameObject startButton;
 
-    public Color defaultColor;
-    public Color sweetColor;
-    public Color bitterColor;
-    private List<VolumeParameter<Color>> _visualLevel;
-    public Volume volume;
-    private ColorAdjustments _visualSource;
+    public Material defaultColor;
+    public Material sweetColor;
+    public Material bitterColor;
+    // private List<VolumeParameter<Color>> _visualLevel;
+    private List<Material> _visualLevel;
+    // public Volume volume;
+    // private ColorAdjustments _visualSource;
+    private MeshRenderer _visualSource;
 
     private const AudioClip DefaultAudioCondition = null;
     public AudioClip sweetAudioCondition;
@@ -107,14 +109,16 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
         _settings = GameObject.Find("Settings");
         _state = State.Idle;
 
-        volume.profile.TryGet(out _visualSource);
+        // volume.profile.TryGet(out _visualSource);
+        _visualSource = GameObject.Find("Visual Sphere").GetComponent<MeshRenderer>();
         _audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
 
-        _visualLevel = new List<VolumeParameter<Color>>{ new(), new(), new() };
-        _visualLevel[0].value = defaultColor;
-        _visualLevel[1].value = sweetColor;
-        _visualLevel[2].value = bitterColor;
-        _visualSource.colorFilter.SetValue(_visualLevel[0]);
+        // _visualLevel = new List<VolumeParameter<Color>>{ new(), new(), new() };
+        // _visualLevel[0].value = defaultColor;
+        // _visualLevel[1].value = sweetColor;
+        // _visualLevel[2].value = bitterColor;
+        // _visualSource.colorFilter.SetValue(_visualLevel[0]);
+        _visualLevel = new List<Material> { defaultColor, sweetColor, bitterColor };
         
         _audioLevel = new List<AudioClip> { DefaultAudioCondition, sweetAudioCondition, bitterAudioCondition };
     }
@@ -157,7 +161,8 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
         _settings.SetActive(true);
         _referenceCube.SetActive(true);
         _stopwatch.Reset();
-        _visualSource.colorFilter.SetValue(_visualLevel[0]);
+        // _visualSource.colorFilter.SetValue(_visualLevel[0]);
+        _visualSource.material = _visualLevel[0];
         _audioSource.Stop();
         _state = State.Idle;
     }
@@ -193,7 +198,8 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
                 _state = State.TakeIn;
                 _takeInCanvas.SetActive(true);
 
-                _visualSource.colorFilter.SetValue(_visualLevel[_conditionOrder[_currentCondition][1]]);
+                // _visualSource.colorFilter.SetValue(_visualLevel[_conditionOrder[_currentCondition][1]]);
+                _visualSource.material = _visualLevel[_conditionOrder[_currentCondition][1]];
                 if (_conditionOrder[_currentCondition][2] != 0)
                 {
                     _audioSource.clip = _audioLevel[_conditionOrder[_currentCondition][2]];
@@ -229,7 +235,8 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
                 _timerCanvas.SetActive(false);
                 _tasteCanvas.SetActive(false);
 
-                _visualSource.colorFilter.SetValue(_visualLevel[0]);
+                // _visualSource.colorFilter.SetValue(_visualLevel[0]);
+                _visualSource.material = _visualLevel[0];
                 _audioSource.Stop();
 
                 break;
