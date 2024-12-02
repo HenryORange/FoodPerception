@@ -1,14 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
-using Debug = System.Diagnostics.Debug;
 
 public interface ISubmitMessageTarget : IEventSystemHandler
 {
@@ -21,11 +20,12 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
     public GameObject questionnaire;
     public GameObject startButton;
 
-    public Texture2D defaultVisualTexture;
-    public Texture2D pinkVisualTexture;
-    public Texture2D greenVisualTexture;
-    private List<OVRPassthroughColorLut> _visualLevel;
-    private OVRPassthroughLayer _passthroughLayer;
+    public Color defaultColor;
+    public Color sweetColor;
+    public Color bitterColor;
+    private List<VolumeParameter<Color>> _visualLevel;
+    public Volume volume;
+    private ColorAdjustments _visualSource;
 
     private const AudioClip DefaultAudioCondition = null;
     public AudioClip sweetAudioCondition;
@@ -37,6 +37,7 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
     private GameObject _referenceCube;
     private GameObject _takeInCanvas;
     private GameObject _tasteCanvas;
+    private GameObject _neutralizeCanvas;
     private GameObject _breakCanvas;
     private GameObject _breakButton;
     private GameObject _endCanvas;
@@ -77,6 +78,7 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
         TakeIn,
         Taste,
         Rate,
+        Neutralize,
         Break
     }
 
@@ -86,41 +88,34 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
         blackRoom.SetActive(false);
         questionnaire.SetActive(false);
         _timerText = GameObject.Find("Timer Text").GetComponent<TextMeshProUGUI>();
-        UnityEngine.Debug.Log("Found timer text: " + _timerText);
         _timerFill = GameObject.Find("Timer Fill").GetComponent<Image>();
-        UnityEngine.Debug.Log("Found timer fill: " + _timerFill);
         _referenceCube = GameObject.Find("Reference Cube");
-        UnityEngine.Debug.Log("Found reference cube: " + _referenceCube);
         _timerCanvas = GameObject.Find("Timer Canvas");
-        UnityEngine.Debug.Log("Found timer canvas: " + _timerCanvas);
         _timerCanvas.SetActive(false);
         _takeInCanvas = GameObject.Find("Take In Canvas");
-        UnityEngine.Debug.Log("Found take in canvas: " + _takeInCanvas);
         _takeInCanvas.SetActive(false);
         _tasteCanvas = GameObject.Find("Taste Canvas");
-        UnityEngine.Debug.Log("Found taste canvas: " + _tasteCanvas);
         _tasteCanvas.SetActive(false);
+        _neutralizeCanvas = GameObject.Find("Neutralize Canvas");
+        _neutralizeCanvas.SetActive(false);
         _breakCanvas = GameObject.Find("Break Canvas");
-        UnityEngine.Debug.Log("Found break canvas: " + _breakCanvas);
         _breakButton = GameObject.Find("Break Button");
-        UnityEngine.Debug.Log("Found break button: " + _breakButton);
         _breakButton.SetActive(false);
         _breakCanvas.SetActive(false);
         _endCanvas = GameObject.Find("End Canvas");
-        UnityEngine.Debug.Log("Found end canvas: " + _endCanvas);
         _endCanvas.SetActive(false);
         _settings = GameObject.Find("Settings");
-        UnityEngine.Debug.Log("Found settings canvas: " + _settings);
         _state = State.Idle;
 
-        _passthroughLayer = GameObject.Find("[BuildingBlock] Passthrough").GetComponent<OVRPassthroughLayer>();
+        volume.profile.TryGet(out _visualSource);
         _audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
 
-        _visualLevel = new List<OVRPassthroughColorLut>
-        {
-            new(ReturnAsRGBA(defaultVisualTexture), false), new(ReturnAsRGBA(pinkVisualTexture), false),
-            new(ReturnAsRGBA(greenVisualTexture), false)
-        };
+        _visualLevel = new List<VolumeParameter<Color>>{ new(), new(), new() };
+        _visualLevel[0].value = defaultColor;
+        _visualLevel[1].value = sweetColor;
+        _visualLevel[2].value = bitterColor;
+        _visualSource.colorFilter.SetValue(_visualLevel[0]);
+        
         _audioLevel = new List<AudioClip> { DefaultAudioCondition, sweetAudioCondition, bitterAudioCondition };
     }
 
@@ -162,8 +157,9 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
         _settings.SetActive(true);
         _referenceCube.SetActive(true);
         _stopwatch.Reset();
+        _visualSource.colorFilter.SetValue(_visualLevel[0]);
+        _audioSource.Stop();
         _state = State.Idle;
-        UnityEngine.Debug.Log("Reset Complete");
     }
 
     // Update is called once per frame
@@ -197,7 +193,7 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
                 _state = State.TakeIn;
                 _takeInCanvas.SetActive(true);
 
-                _passthroughLayer.SetColorLut(_visualLevel[_conditionOrder[_currentCondition][1]], 1);
+                _visualSource.colorFilter.SetValue(_visualLevel[_conditionOrder[_currentCondition][1]]);
                 if (_conditionOrder[_currentCondition][2] != 0)
                 {
                     _audioSource.clip = _audioLevel[_conditionOrder[_currentCondition][2]];
@@ -233,7 +229,7 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
                 _timerCanvas.SetActive(false);
                 _tasteCanvas.SetActive(false);
 
-                _passthroughLayer.SetColorLut(_visualLevel[0], 1);
+                _visualSource.colorFilter.SetValue(_visualLevel[0]);
                 _audioSource.Stop();
 
                 break;
@@ -248,6 +244,7 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
                 _breakButton.SetActive(true);
                 break;
             case State.Rate: break;
+            case State.Neutralize: break;
         }
     }
 
@@ -259,29 +256,33 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
         _stopwatch.Restart();
     }
 
-    public void OnSubmitMessage(List<int[]> results)
+    public void ContinueCondition()
     {
-        SaveToCsv(results);
-        questionnaire.SetActive(false);
+        _neutralizeCanvas.SetActive(false);
         _timerCanvas.SetActive(true);
         blackRoom.SetActive(true);
         _state = State.BlackRoom;
         _stopwatch.Restart();
+        if (_currentCondition % _breakFrequency != 0) return;
+        _state = State.Break;
+        blackRoom.SetActive(false);
+        _breakCanvas.SetActive(true);
+    }
+
+    public void OnSubmitMessage(List<int[]> results)
+    {
+        SaveToCsv(results);
+        questionnaire.SetActive(false);
+        blackRoom.SetActive(false);
+        _neutralizeCanvas.SetActive(true);
+        _state = State.Neutralize;
         _currentCondition += 1;
 
-        if (_currentCondition >= _conditionOrder.Count)
-        {
-            // end experiment
-            startButton.SetActive(true);
-            _referenceCube.SetActive(true);
-            _settings.SetActive(true);
-        }
-        else if (_currentCondition % _breakFrequency == 0)
-        {
-            _state = State.Break;
-            blackRoom.SetActive(false);
-            _breakCanvas.SetActive(true);
-        }
+        if (_currentCondition < _conditionOrder.Count) return;
+        // end experiment
+        startButton.SetActive(true);
+        _referenceCube.SetActive(true);
+        _settings.SetActive(true);
     }
 
     private void SaveToCsv(List<int[]> results)
@@ -322,22 +323,23 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
         csvRow[9] = results[2][1].ToString();
         csvRow[10] = results[3][1].ToString();
 
-        _contentOfResults.AppendLine(string.Join(";", csvRow));
-        WriteCsv(filePath, _contentOfResults);
+        _contentOfResults.Append(string.Join(";", csvRow));
+        WriteCsv(filePath, _contentOfResults, _currentCondition == 0);
+        _contentOfResults.Clear();
     }
 
-    private void WriteCsv(string filename, StringBuilder content)
+    private void WriteCsv(string filename, StringBuilder content, bool header)
     {
         UnityEngine.Debug.Log("Answers stored in path: " + filename);
         try
         {
-            StreamWriter writer = File.CreateText(filename);
+            StreamWriter writer = header ? File.CreateText(filename) : File.AppendText(filename);
             writer.WriteLine(content);
             writer.Close();
         }
         catch (IOException e)
         {
-            UnityEngine.Debug.Log(e.Message);
+            UnityEngine.Debug.LogError(e.Message);
         }
     }
 
