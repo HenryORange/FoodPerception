@@ -301,34 +301,36 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
 
         if (_currentCondition == 0)
         {
-            var csvTitleRow = new string[11];
-            csvTitleRow[0] = "Sugar";
-            csvTitleRow[1] = "Visual";
-            csvTitleRow[2] = "Audio";
-            csvTitleRow[3] = "Sweet";
-            csvTitleRow[4] = "Sour";
-            csvTitleRow[5] = "Bitter";
-            csvTitleRow[6] = "Salty";
-            csvTitleRow[7] = "Sweet Conf";
-            csvTitleRow[8] = "Sour Conf";
-            csvTitleRow[9] = "Bitter Conf";
-            csvTitleRow[10] = "Salty Conf";
+            var csvTitleRow = new string[12];
+            csvTitleRow[0] = "Condition";
+            csvTitleRow[1] = "Sugar";
+            csvTitleRow[2] = "Visual";
+            csvTitleRow[3] = "Audio";
+            csvTitleRow[4] = "Sweet";
+            csvTitleRow[5] = "Sour";
+            csvTitleRow[6] = "Bitter";
+            csvTitleRow[7] = "Salty";
+            csvTitleRow[8] = "Sweet Conf";
+            csvTitleRow[9] = "Sour Conf";
+            csvTitleRow[10] = "Bitter Conf";
+            csvTitleRow[11] = "Salty Conf";
 
             _contentOfResults.AppendLine(string.Join(";", csvTitleRow));
         }
 
-        var csvRow = new string[11];
-        csvRow[0] = _conditionOrder[_currentCondition][0].ToString();
-        csvRow[1] = _conditionOrder[_currentCondition][1].ToString();
-        csvRow[2] = _conditionOrder[_currentCondition][2].ToString();
-        csvRow[3] = results[0][0].ToString();
-        csvRow[4] = results[1][0].ToString();
-        csvRow[5] = results[2][0].ToString();
-        csvRow[6] = results[3][0].ToString();
-        csvRow[7] = results[0][1].ToString();
-        csvRow[8] = results[1][1].ToString();
-        csvRow[9] = results[2][1].ToString();
-        csvRow[10] = results[3][1].ToString();
+        var csvRow = new string[12];
+        csvRow[0] = _currentCondition.ToString();
+        csvRow[1] = _conditionOrder[_currentCondition][0].ToString();
+        csvRow[2] = _conditionOrder[_currentCondition][1].ToString();
+        csvRow[3] = _conditionOrder[_currentCondition][2].ToString();
+        csvRow[4] = results[0][0].ToString();
+        csvRow[5] = results[1][0].ToString();
+        csvRow[6] = results[2][0].ToString();
+        csvRow[7] = results[3][0].ToString();
+        csvRow[8] = results[0][1].ToString();
+        csvRow[9] = results[1][1].ToString();
+        csvRow[10] = results[2][1].ToString();
+        csvRow[11] = results[3][1].ToString();
 
         _contentOfResults.Append(string.Join(";", csvRow));
         WriteCsv(filePath, _contentOfResults, _currentCondition == 0);
@@ -352,6 +354,7 @@ public class Experiment : MonoBehaviour, ISubmitMessageTarget
 
     private void UpdateTimer(int length)
     {
+        _timerText.fontSize = length >= 100 ? 28 : 30;
         _timerText.text = (length - _stopwatch.Elapsed.Seconds).ToString();
         _timerFill.fillAmount = 1 - _stopwatch.Elapsed.Seconds / (float)length;
     }
